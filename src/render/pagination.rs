@@ -34,7 +34,7 @@ impl Paginator {
         let total_pages = if total_items == 0 {
             1
         } else {
-            (total_items + items_per_page - 1) / items_per_page
+            total_items.div_ceil(items_per_page)
         };
 
         let current_page = current_page.clamp(1, total_pages);
@@ -90,7 +90,7 @@ impl Paginator {
         let total_pages = if total_items == 0 {
             1
         } else {
-            (total_items + items_per_page - 1) / items_per_page
+            total_items.div_ceil(items_per_page)
         };
 
         (1..=total_pages)

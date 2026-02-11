@@ -34,7 +34,7 @@ impl ContentLoader {
     }
 
     pub fn load(&self, site_dir: &Path) -> ForgeResult<LoadedContent> {
-        let content_dir = site_dir.join(&std::path::PathBuf::from("content"));
+        let content_dir = site_dir.join(std::path::PathBuf::from("content"));
         let mut posts = Vec::new();
         let mut pages = Vec::new();
 
@@ -63,9 +63,7 @@ impl ContentLoader {
         for entry in WalkDir::new(posts_dir)
             .into_iter()
             .filter_map(|e| e.ok())
-            .filter(|e| {
-                e.path().extension().is_some_and(|ext| ext == "md")
-            })
+            .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
         {
             let path = entry.path();
             let content = std::fs::read_to_string(path)?;
@@ -99,9 +97,7 @@ impl ContentLoader {
         for entry in WalkDir::new(pages_dir)
             .into_iter()
             .filter_map(|e| e.ok())
-            .filter(|e| {
-                e.path().extension().is_some_and(|ext| ext == "md")
-            })
+            .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
         {
             let path = entry.path();
             let content = std::fs::read_to_string(path)?;
