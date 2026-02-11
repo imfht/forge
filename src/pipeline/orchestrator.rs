@@ -56,7 +56,11 @@ impl PipelineOrchestrator {
 
         // ── Phase 2: PARSE (already done during load with parallel potential) ──
         let parse_start = Instant::now();
-        tracing::info!("Phase 2: Processing {} posts, {} pages...", loaded.posts.len(), loaded.pages.len());
+        tracing::info!(
+            "Phase 2: Processing {} posts, {} pages...",
+            loaded.posts.len(),
+            loaded.pages.len()
+        );
         let mut posts = loaded.posts;
         let pages = loaded.pages;
         let parse_time = parse_start.elapsed();
@@ -82,12 +86,7 @@ impl PipelineOrchestrator {
 
         // Build index paginator
         let post_refs: Vec<PostRef> = posts.iter().map(PostRef::from).collect();
-        let index_paginator = Paginator::new(
-            &post_refs,
-            self.config.build.posts_per_page,
-            1,
-            "",
-        );
+        let index_paginator = Paginator::new(&post_refs, self.config.build.posts_per_page, 1, "");
 
         let site = Site {
             posts,
@@ -144,12 +143,8 @@ impl PipelineOrchestrator {
             .posts
             .par_iter()
             .map(|post| {
-                let ctx =
-                    context::build_post_context(post, &self.config, &site.taxonomies);
-                let template = post
-                    .template
-                    .as_deref()
-                    .unwrap_or("post.html");
+                let ctx = context::build_post_context(post, &self.config, &site.taxonomies);
+                let template = post.template.as_deref().unwrap_or("post.html");
                 let html = tera.render(template, &ctx)?;
                 writer::write_page(&output_dir, &format!("posts/{}", post.slug), &html)?;
                 Ok(())
@@ -165,12 +160,8 @@ impl PipelineOrchestrator {
             .pages
             .par_iter()
             .map(|page| {
-                let ctx =
-                    context::build_page_context(page, &self.config, &site.taxonomies);
-                let template = page
-                    .template
-                    .as_deref()
-                    .unwrap_or("page.html");
+                let ctx = context::build_page_context(page, &self.config, &site.taxonomies);
+                let template = page.template.as_deref().unwrap_or("page.html");
                 let html = tera.render(template, &ctx)?;
                 writer::write_page(&output_dir, &page.slug, &html)?;
                 Ok(())
@@ -191,11 +182,8 @@ impl PipelineOrchestrator {
         // Render taxonomy pages
         for (tax_name, collection) in &site.taxonomies {
             // Taxonomy listing page
-            let tax_ctx = context::build_taxonomy_list_context(
-                collection,
-                &self.config,
-                &site.taxonomies,
-            );
+            let tax_ctx =
+                context::build_taxonomy_list_context(collection, &self.config, &site.taxonomies);
             if let Ok(html) = tera.render("taxonomy.html", &tax_ctx) {
                 writer::write_page(&output_dir, &collection.slug, &html)?;
             }

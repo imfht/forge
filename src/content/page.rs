@@ -28,9 +28,7 @@ impl Page {
         source_path: String,
         base_url: &str,
     ) -> Self {
-        let slug = fm
-            .slug
-            .unwrap_or_else(|| slug::slugify(&fm.title));
+        let slug = fm.slug.unwrap_or_else(|| slug::slugify(&fm.title));
         let word_count = content_raw.split_whitespace().count();
         let reading_time = std::cmp::max(1, (word_count as f64 / 200.0).ceil() as usize);
         let permalink = format!("{}/{}/", base_url.trim_end_matches('/'), slug);

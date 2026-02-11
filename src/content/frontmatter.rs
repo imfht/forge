@@ -49,20 +49,21 @@ pub fn parse_front_matter(content: &str, path: &str) -> ForgeResult<(FrontMatter
     }
 
     let after_first = &content[3..];
-    let end_pos = after_first.find("\n---").ok_or_else(|| ForgeError::FrontMatter {
-        path: path.into(),
-        message: "Missing closing --- delimiter".to_string(),
-    })?;
+    let end_pos = after_first
+        .find("\n---")
+        .ok_or_else(|| ForgeError::FrontMatter {
+            path: path.into(),
+            message: "Missing closing --- delimiter".to_string(),
+        })?;
 
     let yaml_str = &after_first[..end_pos];
     let body = &after_first[end_pos + 4..]; // skip past \n---
 
-    let fm: FrontMatter = serde_yaml_ng::from_str(yaml_str).map_err(|e| {
-        ForgeError::FrontMatter {
+    let fm: FrontMatter =
+        serde_yaml_ng::from_str(yaml_str).map_err(|e| ForgeError::FrontMatter {
             path: path.into(),
             message: format!("YAML parse error: {e}"),
-        }
-    })?;
+        })?;
 
     Ok((fm, body.trim_start_matches('\n').to_string()))
 }

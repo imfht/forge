@@ -158,22 +158,70 @@ fn write_default_theme(site_dir: &Path) -> ForgeResult<()> {
 
     // Use include_str! to embed all theme files at compile time
     let files: &[(&str, &str)] = &[
-        ("theme.toml", include_str!("../../themes/default/theme.toml")),
-        ("templates/base.html", include_str!("../../themes/default/templates/base.html")),
-        ("templates/index.html", include_str!("../../themes/default/templates/index.html")),
-        ("templates/post.html", include_str!("../../themes/default/templates/post.html")),
-        ("templates/page.html", include_str!("../../themes/default/templates/page.html")),
-        ("templates/archive.html", include_str!("../../themes/default/templates/archive.html")),
-        ("templates/taxonomy.html", include_str!("../../themes/default/templates/taxonomy.html")),
-        ("templates/taxonomy_single.html", include_str!("../../themes/default/templates/taxonomy_single.html")),
-        ("templates/404.html", include_str!("../../themes/default/templates/404.html")),
-        ("templates/partials/header.html", include_str!("../../themes/default/templates/partials/header.html")),
-        ("templates/partials/footer.html", include_str!("../../themes/default/templates/partials/footer.html")),
-        ("templates/partials/post_card.html", include_str!("../../themes/default/templates/partials/post_card.html")),
-        ("templates/partials/pagination.html", include_str!("../../themes/default/templates/partials/pagination.html")),
-        ("static/css/style.css", include_str!("../../themes/default/static/css/style.css")),
-        ("static/css/syntax.css", include_str!("../../themes/default/static/css/syntax.css")),
-        ("static/js/search.js", include_str!("../../themes/default/static/js/search.js")),
+        (
+            "theme.toml",
+            include_str!("../../themes/default/theme.toml"),
+        ),
+        (
+            "templates/base.html",
+            include_str!("../../themes/default/templates/base.html"),
+        ),
+        (
+            "templates/index.html",
+            include_str!("../../themes/default/templates/index.html"),
+        ),
+        (
+            "templates/post.html",
+            include_str!("../../themes/default/templates/post.html"),
+        ),
+        (
+            "templates/page.html",
+            include_str!("../../themes/default/templates/page.html"),
+        ),
+        (
+            "templates/archive.html",
+            include_str!("../../themes/default/templates/archive.html"),
+        ),
+        (
+            "templates/taxonomy.html",
+            include_str!("../../themes/default/templates/taxonomy.html"),
+        ),
+        (
+            "templates/taxonomy_single.html",
+            include_str!("../../themes/default/templates/taxonomy_single.html"),
+        ),
+        (
+            "templates/404.html",
+            include_str!("../../themes/default/templates/404.html"),
+        ),
+        (
+            "templates/partials/header.html",
+            include_str!("../../themes/default/templates/partials/header.html"),
+        ),
+        (
+            "templates/partials/footer.html",
+            include_str!("../../themes/default/templates/partials/footer.html"),
+        ),
+        (
+            "templates/partials/post_card.html",
+            include_str!("../../themes/default/templates/partials/post_card.html"),
+        ),
+        (
+            "templates/partials/pagination.html",
+            include_str!("../../themes/default/templates/partials/pagination.html"),
+        ),
+        (
+            "static/css/style.css",
+            include_str!("../../themes/default/static/css/style.css"),
+        ),
+        (
+            "static/css/syntax.css",
+            include_str!("../../themes/default/static/css/syntax.css"),
+        ),
+        (
+            "static/js/search.js",
+            include_str!("../../themes/default/static/js/search.js"),
+        ),
     ];
 
     for (path, content) in files {

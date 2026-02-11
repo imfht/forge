@@ -13,13 +13,11 @@ pub fn generate_rss(posts: &[Post], config: &SiteConfig) -> ForgeResult<String> 
             ItemBuilder::default()
                 .title(Some(post.title.clone()))
                 .link(Some(post.permalink.clone()))
-                .description(Some(
-                    if post.description.is_empty() {
-                        post.summary.clone()
-                    } else {
-                        post.description.clone()
-                    },
-                ))
+                .description(Some(if post.description.is_empty() {
+                    post.summary.clone()
+                } else {
+                    post.description.clone()
+                }))
                 .pub_date(Some(post.date.to_rfc2822()))
                 .content(Some(post.content_html.clone()))
                 .build()
@@ -57,19 +55,22 @@ pub fn generate_atom(posts: &[Post], config: &SiteConfig) -> ForgeResult<String>
 
     if !config.author.is_empty() {
         xml.push_str("  <author>\n");
-        xml.push_str(&format!("    <name>{}</name>\n", xml_escape(&config.author)));
+        xml.push_str(&format!(
+            "    <name>{}</name>\n",
+            xml_escape(&config.author)
+        ));
         xml.push_str("  </author>\n");
     }
 
     for post in posts.iter().take(20) {
         xml.push_str("  <entry>\n");
-        xml.push_str(&format!(
-            "    <title>{}</title>\n",
-            xml_escape(&post.title)
-        ));
+        xml.push_str(&format!("    <title>{}</title>\n", xml_escape(&post.title)));
         xml.push_str(&format!("    <link href=\"{}\" />\n", post.permalink));
         xml.push_str(&format!("    <id>{}</id>\n", post.permalink));
-        xml.push_str(&format!("    <updated>{}</updated>\n", post.date.to_rfc3339()));
+        xml.push_str(&format!(
+            "    <updated>{}</updated>\n",
+            post.date.to_rfc3339()
+        ));
         if !post.description.is_empty() {
             xml.push_str(&format!(
                 "    <summary>{}</summary>\n",

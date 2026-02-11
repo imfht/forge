@@ -9,9 +9,7 @@ pub use types::SiteConfig;
 pub fn load_config(site_dir: &Path) -> ForgeResult<SiteConfig> {
     let config_path = site_dir.join("forge.toml");
     if !config_path.exists() {
-        return Err(ForgeError::ConfigNotFound {
-            path: config_path,
-        });
+        return Err(ForgeError::ConfigNotFound { path: config_path });
     }
 
     let content = std::fs::read_to_string(&config_path)?;

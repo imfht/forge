@@ -38,18 +38,20 @@ pub async fn start_server(
     // Spawn file watcher in a blocking thread
     let _watcher_handle = tokio::task::spawn_blocking(move || {
         let tx_clone = tx.clone();
-        let mut watcher = notify::recommended_watcher(move |res: Result<notify::Event, notify::Error>| {
-            if let Ok(event) = res {
-                match event.kind {
-                    notify::EventKind::Modify(_)
-                    | notify::EventKind::Create(_)
-                    | notify::EventKind::Remove(_) => {
-                        let _ = tx_clone.blocking_send(());
+        let mut watcher =
+            notify::recommended_watcher(move |res: Result<notify::Event, notify::Error>| {
+                if let Ok(event) = res {
+                    match event.kind {
+                        notify::EventKind::Modify(_)
+                        | notify::EventKind::Create(_)
+                        | notify::EventKind::Remove(_) => {
+                            let _ = tx_clone.blocking_send(());
+                        }
+                        _ => {}
                     }
-                    _ => {}
                 }
-            }
-        }).expect("Failed to create file watcher");
+            })
+            .expect("Failed to create file watcher");
 
         // Watch content, templates, static, and config
         let dirs_to_watch = [

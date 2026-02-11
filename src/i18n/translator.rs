@@ -31,9 +31,9 @@ impl Translator {
                 {
                     if let Some(lang) = path.file_stem().and_then(|s| s.to_str()) {
                         if let Ok(content) = std::fs::read_to_string(&path) {
-                            if let Ok(map) = serde_yaml_ng::from_str::<HashMap<String, String>>(
-                                &content,
-                            ) {
+                            if let Ok(map) =
+                                serde_yaml_ng::from_str::<HashMap<String, String>>(&content)
+                            {
                                 all.insert(lang.to_string(), map);
                             }
                         }

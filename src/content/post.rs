@@ -44,19 +44,16 @@ impl Post {
         source_path: String,
         base_url: &str,
     ) -> Self {
-        let slug = fm
-            .slug
-            .unwrap_or_else(|| slug::slugify(&fm.title));
-        let word_count = content_raw
-            .split_whitespace()
-            .count();
+        let slug = fm.slug.unwrap_or_else(|| slug::slugify(&fm.title));
+        let word_count = content_raw.split_whitespace().count();
         let reading_time = (word_count as f64 / 200.0).ceil() as usize;
         let reading_time = if reading_time == 0 { 1 } else { reading_time };
         let permalink = format!("{}/posts/{}/", base_url.trim_end_matches('/'), slug);
 
-        let summary = fm.summary.clone().unwrap_or_else(|| {
-            fm.description.clone().unwrap_or_default()
-        });
+        let summary = fm
+            .summary
+            .clone()
+            .unwrap_or_else(|| fm.description.clone().unwrap_or_default());
 
         Self {
             title: fm.title,

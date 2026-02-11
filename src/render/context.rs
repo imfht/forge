@@ -88,10 +88,7 @@ pub fn build_404_context(
     ctx
 }
 
-fn base_context(
-    config: &SiteConfig,
-    taxonomies: &HashMap<String, TaxonomyCollection>,
-) -> Context {
+fn base_context(config: &SiteConfig, taxonomies: &HashMap<String, TaxonomyCollection>) -> Context {
     let mut ctx = Context::new();
     ctx.insert("config", config);
     ctx.insert("site_title", &config.title);

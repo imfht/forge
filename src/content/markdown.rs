@@ -65,9 +65,7 @@ impl MarkdownRenderer {
                             .theme_set
                             .themes
                             .get(&self.theme_name)
-                            .unwrap_or_else(|| {
-                                self.theme_set.themes.values().next().unwrap()
-                            });
+                            .unwrap_or_else(|| self.theme_set.themes.values().next().unwrap());
                         match highlighted_html_for_string(
                             &code_content,
                             &self.syntax_set,
@@ -77,8 +75,7 @@ impl MarkdownRenderer {
                             Ok(highlighted) => html_output.push_str(&highlighted),
                             Err(_) => {
                                 html_output.push_str("<pre><code>");
-                                html_output
-                                    .push_str(&html_escape(&code_content));
+                                html_output.push_str(&html_escape(&code_content));
                                 html_output.push_str("</code></pre>");
                             }
                         }

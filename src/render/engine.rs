@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::path::Path;
-use tera::{Tera, Value, Function, Result as TeraResult};
+use tera::{Function, Result as TeraResult, Tera, Value};
 
 use crate::error::ForgeResult;
 
@@ -33,17 +33,30 @@ pub fn create_tera_engine(site_dir: &Path, theme: &str) -> ForgeResult<Tera> {
     Ok(tera)
 }
 
-pub fn register_functions(tera: &mut Tera, base_url: String, translations: HashMap<String, HashMap<String, String>>, default_lang: String) {
-    tera.register_function("get_url", GetUrlFunction { base_url: base_url.clone() });
+pub fn register_functions(
+    tera: &mut Tera,
+    base_url: String,
+    translations: HashMap<String, HashMap<String, String>>,
+    default_lang: String,
+) {
+    tera.register_function(
+        "get_url",
+        GetUrlFunction {
+            base_url: base_url.clone(),
+        },
+    );
     tera.register_function("get_taxonomy_url", GetTaxonomyUrlFunction { base_url });
-    tera.register_function("trans", TransFunction { translations, default_lang });
+    tera.register_function(
+        "trans",
+        TransFunction {
+            translations,
+            default_lang,
+        },
+    );
 }
 
 /// Filter: format a date string
-fn date_format_filter(
-    value: &Value,
-    args: &HashMap<String, Value>,
-) -> TeraResult<Value> {
+fn date_format_filter(value: &Value, args: &HashMap<String, Value>) -> TeraResult<Value> {
     let date_str = value
         .as_str()
         .ok_or_else(|| tera::Error::msg("date_format: expected string value"))?;
@@ -62,18 +75,12 @@ fn date_format_filter(
 }
 
 /// Filter: truncate text to N words
-fn truncate_words_filter(
-    value: &Value,
-    args: &HashMap<String, Value>,
-) -> TeraResult<Value> {
+fn truncate_words_filter(value: &Value, args: &HashMap<String, Value>) -> TeraResult<Value> {
     let text = value
         .as_str()
         .ok_or_else(|| tera::Error::msg("truncate_words: expected string"))?;
 
-    let count = args
-        .get("count")
-        .and_then(|v| v.as_u64())
-        .unwrap_or(50) as usize;
+    let count = args.get("count").and_then(|v| v.as_u64()).unwrap_or(50) as usize;
 
     let words: Vec<&str> = text.split_whitespace().collect();
     if words.len() <= count {
@@ -116,9 +123,7 @@ impl Function for GetTaxonomyUrlFunction {
             .and_then(|v| v.as_str())
             .ok_or_else(|| tera::Error::msg("get_taxonomy_url: missing 'taxonomy' argument"))?;
 
-        let term = args
-            .get("term")
-            .and_then(|v| v.as_str());
+        let term = args.get("term").and_then(|v| v.as_str());
 
         let base = self.base_url.trim_end_matches('/');
         let tax_slug = slug::slugify(taxonomy);

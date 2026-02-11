@@ -20,11 +20,7 @@ pub fn build_taxonomies(
     result
 }
 
-fn build_taxonomy(
-    posts: &[Post],
-    config: &TaxonomyConfig,
-    base_url: &str,
-) -> TaxonomyCollection {
+fn build_taxonomy(posts: &[Post], config: &TaxonomyConfig, base_url: &str) -> TaxonomyCollection {
     let slug = config
         .slug
         .clone()
@@ -54,12 +50,7 @@ fn build_taxonomy(
         .map(|(name, posts)| {
             let item_slug = slug::slugify(&name);
             let post_count = posts.len();
-            let permalink = format!(
-                "{}/{}/{}/",
-                base_url.trim_end_matches('/'),
-                slug,
-                item_slug
-            );
+            let permalink = format!("{}/{}/{}/", base_url.trim_end_matches('/'), slug, item_slug);
 
             TaxonomyItem {
                 name,
