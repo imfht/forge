@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Archive{% endblock %}
+
+{% block content %}
+<section class="archive">
+    <h1>Archive</h1>
+
+    {% set current_year = "" %}
+    {% for post in posts %}
+        {% set post_year = post.date | date(format="%Y") %}
+        {% if post_year != current_year %}
+            {% if current_year != "" %}</ul>{% endif %}
+            <h2 class="archive-year">{{ post_year }}</h2>
+            <ul class="archive-list">
+            {% set_global current_year = post_year %}
+        {% endif %}
+        <li class="archive-item">
+            <time datetime="{{ post.date }}">{{ post.date | date(format="%b %d") }}</time>
+            <a href="{{ post.permalink }}">{{ post.title }}</a>
+        </li>
+    {% endfor %}
+    {% if posts | length > 0 %}</ul>{% endif %}
+
+    {% if posts | length == 0 %}
+    <p>No posts yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

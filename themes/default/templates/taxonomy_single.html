@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ taxonomy_name | title }}: {{ term.name }}{% endblock %}
+
+{% block content %}
+<section class="taxonomy-single">
+    <h1>{{ taxonomy_name | title }}: {{ term.name }}</h1>
+    <p class="term-count">{{ term.post_count }} post{% if term.post_count != 1 %}s{% endif %}</p>
+
+    <ul class="term-posts">
+    {% for post_ref in paginator.items %}
+        <li>
+            <a href="{{ post_ref.permalink }}">{{ post_ref.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% include "partials/pagination.html" %}
+</section>
+{% endblock %}

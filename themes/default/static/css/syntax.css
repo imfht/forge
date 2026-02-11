@@ -1,0 +1,22 @@
+/* Syntax highlighting — warm palette
+   Code blocks use a warm dark background (#2c2a27) instead of cold blue-gray.
+   Text colors adapted from base16-ocean but warmed to match. */
+
+pre {
+    background: #2c2a27 !important;
+    color: #c8c4ba;
+}
+
+/* Override inline background colors from syntect */
+pre[style] {
+    background: #2c2a27 !important;
+}
+
+/* --- Dark mode --- */
+@media (prefers-color-scheme: dark) {
+    pre,
+    pre[style] {
+        background: #252320 !important;
+        color: #d0ccc2;
+    }
+}

@@ -1,0 +1,6 @@
+<article class="post-card">
+    <a href="{{ post.permalink }}" class="post-card-link">
+        <h2 class="post-card-title">{{ post.title }}</h2>
+        <time class="post-card-date" datetime="{{ post.date }}">{{ post.date | date(format="%B %d, %Y") }}</time>
+    </a>
+</article>

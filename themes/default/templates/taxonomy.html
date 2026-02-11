@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ taxonomy.name | title }}{% endblock %}
+
+{% block content %}
+<section class="taxonomy-list">
+    <h1>{{ taxonomy.name | title }}</h1>
+
+    <ul class="taxonomy-items">
+    {% for item in taxonomy.items %}
+        <li>
+            <a href="{{ item.permalink }}">{{ item.name }}</a>
+            <span class="count">({{ item.post_count }})</span>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% if taxonomy.items | length == 0 %}
+    <p>No {{ taxonomy.name }} yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

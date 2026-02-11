@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ language | default(value='en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title | default(value='') }}{% endblock %} - {{ site_title }}</title>
+    <meta name="description" content="{{ description | default(value='') }}">
+    <meta name="author" content="{{ author | default(value='') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+    <link rel="stylesheet" href="{{ base_url }}/css/syntax.css">
+    <link rel="alternate" type="application/rss+xml" title="{{ site_title }} RSS" href="{{ base_url }}/feed.xml">
+    <link rel="alternate" type="application/atom+xml" title="{{ site_title }} Atom" href="{{ base_url }}/atom.xml">
+    <link rel="sitemap" type="application/xml" href="{{ base_url }}/sitemap.xml">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    {% include "partials/header.html" %}
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    <script src="{{ base_url }}/js/search.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

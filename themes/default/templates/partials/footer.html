@@ -1,0 +1,13 @@
+<footer class="site-footer">
+    <nav class="site-nav">
+        <a href="{{ base_url }}/archive/">Archive</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/categories/">Categories</a>
+        <a href="{{ base_url }}/tags/">Tags</a>
+    </nav>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search" aria-label="Search">
+        <div id="search-results" class="search-results"></div>
+    </div>
+    <p class="site-colophon">&copy; {{ now() | date(format="%Y") }} {{ site_title }}</p>
+</footer>
